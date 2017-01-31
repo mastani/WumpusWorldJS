@@ -1,0 +1,21 @@
+body {
+    margin: 50px 150px 0 150px;
+}
+
+.mboard, .pboard {
+    background-color: #999;
+    height: 350px;
+    width: 350px;
+}
+
+.mboard td, .pboard td {
+    background-color: #efefef;
+}
+
+.pboard {
+    float: right;
+}
+
+.mboard {
+    float: left;
+}

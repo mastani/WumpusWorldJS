@@ -1,0 +1,141 @@
+<html>
+<head>
+    <link rel="stylesheet" href="files/css/style.css"/>
+    <script src="files/js/jquery.js"></script>
+    <script>
+        isWumpusDead = false;
+        isShooting = false;
+    </script>
+    <script src="files/js/cell.js"></script>
+    <script src="files/js/wumpus.js"></script>
+</head>
+
+<body>
+<table class="pboard">
+    <tbody>
+    <tr class="row4">
+        <td class="cell14"></td>
+        <td class="cell24"></td>
+        <td class="cell34"></td>
+        <td class="cell44"></td>
+    </tr>
+    <tr class="row3">
+        <td class="cell13"></td>
+        <td class="cell23"></td>
+        <td class="cell33"></td>
+        <td class="cell43"></td>
+    </tr>
+    <tr class="row2">
+        <td class="cell12"></td>
+        <td class="cell22"></td>
+        <td class="cell32"></td>
+        <td class="cell42"></td>
+    </tr>
+    <tr class="row1">
+        <td class="cell11"></td>
+        <td class="cell21"></td>
+        <td class="cell31"></td>
+        <td class="cell41"></td>
+    </tr>
+    </tbody>
+</table>
+
+<table class="mboard">
+    <tbody>
+    <tr class="row4">
+        <td class="cell14"></td>
+        <td class="cell24"></td>
+        <td class="cell34"></td>
+        <td class="cell44"></td>
+    </tr>
+    <tr class="row3">
+        <td class="cell13"></td>
+        <td class="cell23"></td>
+        <td class="cell33"></td>
+        <td class="cell43"></td>
+    </tr>
+    <tr class="row2">
+        <td class="cell12"></td>
+        <td class="cell22"></td>
+        <td class="cell32"></td>
+        <td class="cell42"></td>
+    </tr>
+    <tr class="row1">
+        <td class="cell11"></td>
+        <td class="cell21"></td>
+        <td class="cell31"></td>
+        <td class="cell41"></td>
+    </tr>
+    </tbody>
+</table>
+
+<div style="position: absolute; top: 440px;">
+    <button onclick="location.reload();">Restart Game</button>
+</div>
+
+<div style="position: absolute; top: 470px;">
+    <button id="startGame">Start Game</button>
+</div>
+
+<div style="position: absolute; top: 500px;">
+    <p id="points">Points: 0</p>
+</div>
+
+<div style="position: absolute; top: 530px; color: red;">
+    <p id="status"></p>
+</div>
+
+</body>
+
+<script>
+    $(document).ready(function () {
+        wumpus = new Wumpus();
+        wumpus.reStart();
+
+        $(window).keypress(function (e) {
+            if (e.keyCode === 0 || e.keyCode === 32) {
+                e.preventDefault();
+                //console.log(JSON.stringify(wumpus));
+                var dir = wumpus.move();
+                wumpus.handMove(dir);
+            }
+        });
+
+        var timer = function () {
+            if (!wumpus.gameOver) {
+                var dir = wumpus.move();
+                wumpus.handMove(dir);
+            }
+        };
+
+        $("#startGame").click(function () {
+            setInterval(timer, 800);
+        });
+    });
+
+    $(document).keydown(function (e) {
+        switch (e.which) {
+            case 37: // left
+                wumpus.handMove(wumpus.Moves.Left);
+                break;
+
+            case 38: // up
+                wumpus.handMove(wumpus.Moves.Up);
+                break;
+
+            case 39: // right
+                wumpus.handMove(wumpus.Moves.Right);
+                break;
+
+            case 40: // down
+                wumpus.handMove(wumpus.Moves.Down);
+                break;
+
+            default:
+                return; // exit this handler for other keys
+        }
+        e.preventDefault(); // prevent the default action (scroll / move caret)
+    });
+</script>
+
+</html>
